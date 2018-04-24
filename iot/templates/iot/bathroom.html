@@ -1,0 +1,24 @@
+{% extends 'iot/home.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    bathroom
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+    <div>
+    <h2>Climate</h2>
+        <div>
+          <h3>Temp</h3>
+          <p>{{ temp }} &#8451;</p>
+        </div>
+        <div>
+          <h3>Hum</h3>
+          <p>{{ hum }} %</p>
+        </div>
+    </div>
+{% endblock %}
+

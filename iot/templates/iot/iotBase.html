@@ -1,0 +1,57 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="shortcut icon" href="{% static 'iot/images/favicon.ico' %}" type="image/x-icon">
+  <title>{% block title %}{% endblock %} &ndash; My IoT home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- Custom styles for this template -->
+  {% block style %}
+  <link href="{% static 'iot/style.css' %}" rel="stylesheet">
+  {% endblock %}
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'iot' %}">My IoT home <span class="glyphicon glyphicon-home"></span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Rooms <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Kitchen</a></li>
+                <li><a href="{% url 'bathroom' %}">Bathroom</a></li>
+                <li><a href="#">Live room</a></li>
+                <li><a href="#">Bed room</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Boiler house <span class="glyphicon glyphicon-fire"></span></a></li>
+            <li><a href="#">Courtyard <span class="glyphicon glyphicon-tree-deciduous"></span></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'logout' %}">Log out <span class="glyphicon glyphicon-log-out"></span> </a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+       {% block content %}
+       {% endblock %}
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
