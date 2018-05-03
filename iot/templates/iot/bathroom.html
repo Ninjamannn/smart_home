@@ -1,6 +1,13 @@
 {% extends 'iot/home.html' %}
 {% load staticfiles %}
 
+
+
+{% block scripts %}
+    <script src="{% static 'iot/js/scripts.js' %}"></script>
+{% endblock %}
+
+
 {% block title %}
     bathroom
 {% endblock %}
@@ -10,15 +17,16 @@
 
 {% block content %}
     <div>
+        <form id="form_buy" class="form-inline">
+            <div class="form-group">
+                <button id="button" type="button" class="btn btn-success btn-buy">
+                    Get!
+                </button>
+            </div>
+        </form>
+    </div>
+    <div>
     <h2>Climate</h2>
-        <div>
-          <h3>Temp</h3>
-          <p>{{ temp }} &#8451;</p>
-        </div>
-        <div>
-          <h3>Hum</h3>
-          <p>{{ hum }} %</p>
-        </div>
+        {% include 'iot/climate.html' %}
     </div>
 {% endblock %}
-

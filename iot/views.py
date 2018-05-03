@@ -19,8 +19,8 @@ def iot(request):
 
 @login_required(login_url='login')
 def bathroom(request):
-    temp, hum = Dht22.get_data()
-    return render(request, 'iot/bathroom.html', {'temp': temp, 'hum': hum})
+    # temp, hum = Dht22.get_data()
+    return render(request, 'iot/bathroom.html')
 
 
 def log_in(request):
@@ -39,3 +39,8 @@ def log_in(request):
             _message = 'Invalid login, please try again.'
     context = {'message': _message}
     return render(request, 'iot/login.html', context)
+
+
+def climate(request):
+    data = Dht22.objects.last()
+    return render(request, 'iot/climate.html', {'data': data})

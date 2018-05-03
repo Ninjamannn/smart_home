@@ -27,7 +27,8 @@ class Dht22(models.Model):
 
     @staticmethod
     def get_data():
-        temp, hum = get_temp.delay()
+        result = get_temp.delay()
+        temp, hum = result.get()
         return temp, hum
 
     def __str__(self):
