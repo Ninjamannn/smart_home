@@ -13,20 +13,40 @@
 {% endblock %}
 
 {% block style %}
+    <link href="{% static 'iot/climate_rooms.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-    <div>
-        <form id="form_buy" class="form-inline">
-            <div class="form-group">
-                <button id="button" type="button" class="btn btn-success btn-buy">
-                    Get!
-                </button>
-            </div>
-        </form>
+
+    <div class="container">
+      <h2>Bathroom</h2>
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Climate</a></li>
+        <li><a data-toggle="tab" href="#menu1">Chart</a></li>
+        <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+        <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+          <h3>Climate</h3>
+          <p>{% include 'iot/climate.html' %}</p>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+          <h3>Chart</h3>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+          <h3>Menu 2</h3>
+          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+        </div>
+        <div id="menu3" class="tab-pane fade">
+          <h3>Menu 3</h3>
+          <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+        </div>
+      </div>
     </div>
-    <div>
-    <h2>Climate</h2>
-        {% include 'iot/climate.html' %}
-    </div>
+
+
+
 {% endblock %}

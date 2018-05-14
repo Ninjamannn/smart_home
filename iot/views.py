@@ -41,6 +41,7 @@ def log_in(request):
     return render(request, 'iot/login.html', context)
 
 
+@login_required(login_url='login')
 def climate(request):
     data = Dht22.objects.last()
     return render(request, 'iot/climate.html', {'data': data})

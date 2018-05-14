@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from django.db import models
 from django.db.models import DateField
 from django.utils import timezone
@@ -8,13 +8,13 @@ from iot.tasks import get_temp
 
 
 class Dht22(models.Model):
-    location = models.CharField('Title', max_length=30)
-    type_sensor = models.CharField('type_sensor', max_length=30)
+    location = models.CharField('Location', max_length=30)
+    type_sensor = models.CharField('Type_sensor', max_length=30)
     temp_value = models.FloatField()
     hum_value = models.FloatField()
     #date = models.DateTimeField('Created Date', default=timezone.localtime(timezone.now()))
-    date = models.DateTimeField('Created Date', auto_now=True)
-    #date = models.DateTimeField(default=datetime.datetime.now)
+    #date = models.DateTimeField('Created Date', auto_now=True, editable=True) не отоюражает в админ
+    datetime = models.DateTimeField('Created Date', default=datetime.now)
 
     def update_data(self):  # В конструкторе инициализацию нельзя!
         print('Model<Dht22>: update data...')
@@ -23,7 +23,6 @@ class Dht22(models.Model):
         self.type_sensor = self.__class__.__name__
         self.temp_value = temp
         self.hum_value = hum
-        #self.date = datetime.datetime.now()
         self.save()
         print('Model<Dht22>: update OK')
 
@@ -34,4 +33,5 @@ class Dht22(models.Model):
         return temp, hum
 
     def __str__(self):
-        return "loc: %s | temp: %s| hum: %s| date: %s" % (self.location, self.temp_value, self.hum_value, self.date)
+        return "loc: %s | temp: %s| hum: %s| date: %s" % (self.location, self.temp_value,
+                                                          self.hum_value, self.datetime)

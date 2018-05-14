@@ -12,6 +12,8 @@ function refresh() {
 console.log('START!');
 refresh();
 
+
+
 $(document).ready(function () {
     var button = $('#button');
     console.log(button);
