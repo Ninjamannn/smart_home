@@ -1,4 +1,25 @@
+{% extends 'iot/home.html' %}
+{% load staticfiles %}
 
+{% block scripts %}
+
+{% endblock %}
+
+
+{% block title %}
+    charts
+{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+    Hello!
+{% load chartit %}
+{{ weatherchart|load_charts:"container" }}
+<div id='container'> Chart will be rendered here </div>
+{% endblock %}
 
 
 

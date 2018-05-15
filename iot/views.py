@@ -1,3 +1,4 @@
+from chartit import DataPool, Chart
 import time
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, get_object_or_404
@@ -45,3 +46,40 @@ def log_in(request):
 def climate(request):
     data = Dht22.objects.last()
     return render(request, 'iot/climate.html', {'data': data})
+
+
+def weather_chart_view(request):
+    #Step 1: Create a DataPool with the data we want to retrieve.
+    weatherdata = \
+        DataPool(
+           series=
+            [{'options': {
+               'source': Dht22.objects.all()},
+              'terms': [
+                'datetime',
+                'temp_value',
+                'hum_value']}
+             ])
+
+    #Step 2: Create the Chart object
+    cht = Chart(
+            datasource = weatherdata,
+            series_options =
+              [{'options':{
+                  'type': 'line',
+                  'stacking': False},
+                'terms':{
+                  'datetime': [
+                    'temp_value',
+                    'hum_value']
+                  }}],
+            chart_options =
+              {'title': {
+                   'text': 'Weather Data of Boston and Houston'},
+               'xAxis': {
+                    'title': {
+                       'text': 'Month number'}}})
+
+    #Step 3: Send the chart object to the template.
+    return render(request, 'iot/charts.html', {'weatherchart': cht})
+    #return render_to_response({'weatherchart': cht})
