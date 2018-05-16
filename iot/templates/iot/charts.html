@@ -1,7 +1,12 @@
 {% extends 'iot/home.html' %}
 {% load staticfiles %}
 
-{% block scripts %}
+{% block style %}
+{% endblock %}
+
+{% block script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
 
 {% endblock %}
 
@@ -10,17 +15,18 @@
     charts
 {% endblock %}
 
-{% block style %}
-
-{% endblock %}
 
 {% block content %}
-    Hello!
+
 {% load chartit %}
-{{ weatherchart|load_charts:"container" }}
-<div id='container'> Chart will be rendered here </div>
+{{ weatherchart|load_charts:"data" }}
+    <div id='data'> Chart will be rendered here </div>
+
 {% endblock %}
 
+{% block scripts_body_down %}
+
+{% endblock %}
 
 
 

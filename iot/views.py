@@ -81,5 +81,6 @@ def weather_chart_view(request):
                        'text': 'Month number'}}})
 
     #Step 3: Send the chart object to the template.
-    return render(request, 'iot/charts.html', {'weatherchart': cht})
-    #return render_to_response({'weatherchart': cht})
+    #return render(request, 'iot/charts.html', {'weatherchart': cht})
+    return render_to_response('iot/charts.html', {'weatherchart': cht})
+

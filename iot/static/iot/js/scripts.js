@@ -9,8 +9,8 @@ function refresh() {
     })
 }
 
-console.log('START!');
-refresh();
+console.log('START scripts.js');
+
 
 
 
@@ -18,6 +18,7 @@ $(document).ready(function () {
     var button = $('#button');
     console.log(button);
     console.log('Hello!');
+    refresh();
     button.on('click', function () {
         console.log('CLiCK!');
     });
