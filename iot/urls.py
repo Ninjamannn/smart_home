@@ -7,6 +7,5 @@ urlpatterns = [
     path('login/', views.log_in, name='login'),
     path('logout/', logout, {'next_page': 'login'}, name='logout'),
     path('bathroom/', views.bathroom, name='bathroom'),
-    path('bathroom/climate/', views.climate, name='climate'),
-    path('charts/', views.weather_chart_view, name='charts'),
+    path('bathroom/api/climate/', views.climate, name='climate'),
 ]

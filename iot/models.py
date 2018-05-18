@@ -7,7 +7,7 @@ from iot.tasks import get_temp
 #from django.contrib.auth import get_user_model
 
 
-class Dht22(models.Model):
+class Dht22Bathroom(models.Model):
     location = models.CharField('Location', max_length=30)
     type_sensor = models.CharField('Type_sensor', max_length=30)
     temp_value = models.FloatField()
@@ -17,14 +17,14 @@ class Dht22(models.Model):
     datetime = models.DateTimeField('Created Date', default=datetime.now)
 
     def update_data(self):  # В конструкторе инициализацию нельзя!
-        print('Model<Dht22>: update data...')
+        print('Model<Dht22Bathroom>: update data...')
         temp, hum = get_temp()
         self.location = 'Bathroom'
         self.type_sensor = self.__class__.__name__
         self.temp_value = temp
         self.hum_value = hum
         self.save()
-        print('Model<Dht22>: update OK')
+        print('Model<Dht22Bathroom>: update OK')
 
     @staticmethod
     def get_data():

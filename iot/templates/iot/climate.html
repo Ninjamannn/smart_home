@@ -1,21 +1,10 @@
-<!--
-<div id="temp">
-  <h3>Date</h3>
-    <p>{{ data.datetime|date:"d/m/Y" }} {{ data.datetime|time:"H:i" }}</p>
-  <h3>Temp</h3>
-    <p>{{ data.temp_value }} &#8451;</p>
-  <h3>Hum</h3>
-    <p>{{ data.hum_value }} %</p>
-</div>
--->
-
-<div id="temp" class="climate-panel">
+<div id="climate" class="climate-panel">
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">Date</h3>
       </div>
       <div class="panel-body">
-          {{ data.datetime|date:"d/m/Y" }} {{ data.datetime|time:"H:i" }}
+          {{ last_data.datetime|date:"d/m/Y" }} {{ last_data.datetime|time:"H:i" }}
       </div>
     </div>
 
@@ -24,7 +13,7 @@
         <h3 class="panel-title">Temperature</h3>
       </div>
       <div class="panel-body">
-          {{ data.temp_value }} &#8451;
+          {{ last_data.temp_value }} &#8451;
       </div>
     </div>
 
@@ -33,7 +22,9 @@
         <h3 class="panel-title">Humidity</h3>
       </div>
       <div class="panel-body">
-          {{ data.hum_value }} %
+          {{ last_data.hum_value }} %
       </div>
     </div>
 </div>
+
+

@@ -26,8 +26,11 @@ def get_temp():
 
 
 @app.task
-def update_dht22():
-    print('@app.task <update_dht22>: starting update dht22...')
-    dht22 = iot.models.Dht22()
+def update_dht22_bathroom():
+    """
+    app.conf.beat_schedule - crontab()
+    """
+    print('@app.task <update_dht22Bathroom>: starting update dht22...')
+    dht22 = iot.models.Dht22Bathroom()
     dht22.update_data()
-    print('@app.task <update_dht22>: data has been updated from %s' % dht22.location)
+    print('@app.task <update_dht22Bathroom>: data has been updated from %s' % dht22.location)

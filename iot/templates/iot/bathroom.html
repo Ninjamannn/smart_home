@@ -2,10 +2,29 @@
 {% load staticfiles %}
 
 
-
 {% block script %}
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="{% static 'iot/js/scripts.js' %}"></script>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script>
+        let endpoint = '{% url 'climate' %}';
+        function refresh_climate() {
+            console.log('refresh last climate data from DB!');
+            $.ajax({
+                url: endpoint,
+                success: function (data) {
+                    //console.log(data);
+                    $('#climate').html(data);
+                }
+            })
+        }
+        $(document).ready(function () {
+            console.log('STARTING refresh');
+            refresh_climate();
+            setInterval('refresh_climate()', 5000);
+        });
+    </script>
+
 {% endblock %}
 
 
@@ -13,9 +32,11 @@
     bathroom
 {% endblock %}
 
+
 {% block style %}
     <link href="{% static 'iot/climate_rooms.css' %}" rel="stylesheet">
 {% endblock %}
+
 
 {% block content %}
 
@@ -35,11 +56,17 @@
         </div>
         <div id="menu1" class="tab-pane fade">
           <h3>Chart</h3>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          {% load chartit %}
+          {{ dht22BathroomData|load_charts:"data" }}
+          <div id="data"></div>
         </div>
         <div id="menu2" class="tab-pane fade">
           <h3>Menu 2</h3>
-          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+          <div class="row">
+              <div class="col-sm-12" url-endpoint="{% url 'climate' %}">
+                  Hello World!
+              </div>
+          </div>
         </div>
         <div id="menu3" class="tab-pane fade">
           <h3>Menu 3</h3>

@@ -1,10 +1,10 @@
-function refresh() {
+function refresh_climate() {
     console.log('refresh last climate data from DB!');
     $.ajax({
-        url: 'climate',
+        url: '/bathroom/climate',
         success: function (data) {
             //console.log(data);
-            $('#temp').html(data);
+            $('#climate').html(data);
         }
     })
 }
@@ -12,16 +12,8 @@ function refresh() {
 console.log('START scripts.js');
 
 
-
-
 $(document).ready(function () {
-    var button = $('#button');
-    console.log(button);
-    console.log('Hello!');
-    refresh();
-    button.on('click', function () {
-        console.log('CLiCK!');
-    });
-
-    setInterval('refresh()', 50000);
+    console.log('START refresh');
+    refresh_climate();
+    setInterval('refresh_climate()', 5000);
 });

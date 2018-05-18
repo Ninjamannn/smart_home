@@ -10,18 +10,12 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 #from django.core.urlresolvers import reverse
 from django.shortcuts import render
-from iot.models import Dht22
+from iot.models import Dht22Bathroom
 
 
 @login_required(login_url='login')
 def iot(request):
     return render(request, 'iot/home.html')
-
-
-@login_required(login_url='login')
-def bathroom(request):
-    # temp, hum = Dht22.get_data()
-    return render(request, 'iot/bathroom.html')
 
 
 def log_in(request):
@@ -44,17 +38,20 @@ def log_in(request):
 
 @login_required(login_url='login')
 def climate(request):
-    data = Dht22.objects.last()
-    return render(request, 'iot/climate.html', {'data': data})
+    last_data = Dht22Bathroom.objects.last()
+    return render(request, 'iot/climate.html', {'last_data': last_data})
 
 
-def weather_chart_view(request):
+@login_required(login_url='login')
+def bathroom(request):
+    last_data = Dht22Bathroom.objects.last()
+
     #Step 1: Create a DataPool with the data we want to retrieve.
-    weatherdata = \
+    dht22BathroomData = \
         DataPool(
            series=
             [{'options': {
-               'source': Dht22.objects.all()},
+               'source': Dht22Bathroom.objects.all()},
               'terms': [
                 'datetime',
                 'temp_value',
@@ -63,7 +60,7 @@ def weather_chart_view(request):
 
     #Step 2: Create the Chart object
     cht = Chart(
-            datasource = weatherdata,
+            datasource = dht22BathroomData,
             series_options =
               [{'options':{
                   'type': 'line',
@@ -75,12 +72,10 @@ def weather_chart_view(request):
                   }}],
             chart_options =
               {'title': {
-                   'text': 'Weather Data of Boston and Houston'},
+                   'text': 'Climate in my bathroom'},
                'xAxis': {
                     'title': {
-                       'text': 'Month number'}}})
+                       'text': 'Date/Time'}}})
 
     #Step 3: Send the chart object to the template.
-    #return render(request, 'iot/charts.html', {'weatherchart': cht})
-    return render_to_response('iot/charts.html', {'weatherchart': cht})
-
+    return render(request, 'iot/bathroom.html', {'dht22BathroomData': cht, 'last_data': last_data})
