@@ -11,6 +11,7 @@ from django.http import HttpResponseRedirect
 #from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from iot.models import Dht22Bathroom
+import datetime
 
 
 @login_required(login_url='login')
@@ -51,7 +52,8 @@ def bathroom(request):
         DataPool(
            series=
             [{'options': {
-               'source': Dht22Bathroom.objects.all()},
+               'source': Dht22Bathroom.objects.filter(datetime__gte=datetime.date.today())
+                                                      .filter(datetime__gte='2018-5-18T10:00:00')},
               'terms': [
                 'datetime',
                 'temp_value',

@@ -14,7 +14,7 @@ class Dht22Bathroom(models.Model):
     hum_value = models.FloatField()
     #date = models.DateTimeField('Created Date', default=timezone.localtime(timezone.now()))
     #date = models.DateTimeField('Created Date', auto_now=True, editable=True) не отоюражает в админ
-    datetime = models.DateTimeField('Created Date', default=datetime.now)
+    datetime = models.DateTimeField('Created Date')
 
     def update_data(self):  # В конструкторе инициализацию нельзя!
         print('Model<Dht22Bathroom>: update data...')
@@ -23,6 +23,8 @@ class Dht22Bathroom(models.Model):
         self.type_sensor = self.__class__.__name__
         self.temp_value = temp
         self.hum_value = hum
+        #self.datetime = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
+        self.datetime = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M")
         self.save()
         print('Model<Dht22Bathroom>: update OK')
 
