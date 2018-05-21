@@ -35,5 +35,5 @@ class Dht22Bathroom(models.Model):
         return temp, hum
 
     def __str__(self):
-        return "loc: %s | temp: %s| hum: %s| date: %s" % (self.location, self.temp_value,
-                                                          self.hum_value, self.datetime)
+        return "loc: %s | temp: %s | hum: %s | date: %s" % (self.location, self.temp_value,
+                                                            self.hum_value, self.datetime)

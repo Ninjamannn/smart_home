@@ -7,16 +7,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script>
-        let endpoint = '{% url 'climate' %}';
+        let climate_endpoint = '{% url 'climate' %}';
         function refresh_climate() {
             console.log('refresh last climate data from DB!');
             $.ajax({
-                url: endpoint,
+                url: climate_endpoint,
                 success: function (data) {
                     //console.log(data);
                     $('#climate').html(data);
                 }
-            })
+            });
         }
         $(document).ready(function () {
             console.log('STARTING refresh');
@@ -56,9 +56,7 @@
         </div>
         <div id="menu1" class="tab-pane fade">
           <h3>Chart</h3>
-          {% load chartit %}
-          {{ dht22BathroomData|load_charts:"data" }}
-          <div id="data"></div>
+          <p>{% include 'iot/bathroom_chart.html' %}</p>
         </div>
         <div id="menu2" class="tab-pane fade">
           <h3>Menu 2</h3>

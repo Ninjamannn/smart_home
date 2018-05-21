@@ -46,14 +46,24 @@ def climate(request):
 @login_required(login_url='login')
 def bathroom(request):
     last_data = Dht22Bathroom.objects.last()
+    #today = datetime.date.today()
+    #one_week = datetime.timedelta(weeks=1)
+    #week = today - one_week
+    #today_day = today.day
+    #last_week = datetime.date.today().day - 7
+    #datetime__range = [str(week), str(today)]
+    cht = chart(request, as_func=True, period=3)
+    return render(request, 'iot/bathroom.html', {'dht22BathroomData': cht, 'last_data': last_data})
 
+
+def chart(request, as_func=False, period=7):       # TODO сделать универсальную функцию для каждого помещения
+    period_day = datetime.date.today().day - period
     #Step 1: Create a DataPool with the data we want to retrieve.
     dht22BathroomData = \
         DataPool(
            series=
             [{'options': {
-               'source': Dht22Bathroom.objects.filter(datetime__gte=datetime.date.today())
-                                                      .filter(datetime__gte='2018-5-18T10:00:00')},
+               'source': Dht22Bathroom.objects.filter(datetime__day__gte=period_day)},
               'terms': [
                 'datetime',
                 'temp_value',
@@ -80,4 +90,7 @@ def bathroom(request):
                        'text': 'Date/Time'}}})
 
     #Step 3: Send the chart object to the template.
-    return render(request, 'iot/bathroom.html', {'dht22BathroomData': cht, 'last_data': last_data})
+    if as_func is True:
+        return cht
+    else:
+        return render(request, 'iot/bathroom_chart.html', {'dht22BathroomData': cht})
