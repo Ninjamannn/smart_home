@@ -7,21 +7,47 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script>
+        let chart_endpoint = '{% url 'bathroom_chart' %}';
         let climate_endpoint = '{% url 'climate' %}';
+
+        function refresh_chart() {
+            console.log('refresh chart!');
+        }
+
         function refresh_climate() {
             console.log('refresh last climate data from DB!');
             $.ajax({
+                async: true,
                 url: climate_endpoint,
                 success: function (data) {
                     //console.log(data);
                     $('#climate').html(data);
+                    console.log('climat refresh OK')
                 }
             });
         }
+
         $(document).ready(function () {
             console.log('STARTING refresh');
             refresh_climate();
-            setInterval('refresh_climate()', 5000);
+            setInterval('refresh_climate()', 10000);
+            $('.container').on('click', '#bathroom_week', function () {
+                this.blur(); // off focus on button after click
+                console.log('click!!!!');
+                //refresh_chart();
+                $.ajax({
+                type: 'get',
+                async: true,
+                url: chart_endpoint,
+                data: {'period': $(this).attr('value')},
+                }).done(function (data) {
+                    $('#data_chart').html(data);
+                    //console.log(data);
+                    console.log('chart refresh OK')
+                }).fail(function () {
+                    console.log('"Sorry. Server unavailable. "');
+                });
+            });
         });
     </script>
 
@@ -39,12 +65,11 @@
 
 
 {% block content %}
-
     <div class="container">
       <h2>Bathroom</h2>
       <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#home">Climate</a></li>
-        <li><a data-toggle="tab" href="#menu1">Chart</a></li>
+        <li><a id="chartupdate" data-toggle="tab" href="#menu1">Chart</a></li>
         <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
         <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
       </ul>
@@ -55,20 +80,22 @@
           <p>{% include 'iot/climate.html' %}</p>
         </div>
         <div id="menu1" class="tab-pane fade">
+
           <h3>Chart</h3>
+          <button id="bathroom_week" value="7" class="btn btn-info btn-sm">Last week</button>
           <p>{% include 'iot/bathroom_chart.html' %}</p>
         </div>
         <div id="menu2" class="tab-pane fade">
           <h3>Menu 2</h3>
           <div class="row">
-              <div class="col-sm-12" url-endpoint="{% url 'climate' %}">
+              <div class="col-sm-12">
                   Hello World!
               </div>
           </div>
         </div>
         <div id="menu3" class="tab-pane fade">
           <h3>Menu 3</h3>
-          <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+          <p>Hello</p>
         </div>
       </div>
     </div>
