@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script>
-        let chart_endpoint = '{% url 'bathroom_chart' %}';
+
         let climate_endpoint = '{% url 'climate' %}';
 
         function refresh_chart() {
@@ -34,12 +34,13 @@
             $('.container').on('click', '#bathroom_week', function () {
                 this.blur(); // off focus on button after click
                 console.log('click!!!!');
+                let val = $(this).attr('value');
                 //refresh_chart();
                 $.ajax({
                 type: 'get',
                 async: true,
-                url: chart_endpoint,
-                data: {'period': $(this).attr('value')},
+                url: '/bathroom/api/chart/' + val,
+                //data: {'period': $(this).attr('value')},
                 }).done(function (data) {
                     $('#data_chart').html(data);
                     //console.log(data);
