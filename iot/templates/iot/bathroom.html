@@ -10,10 +10,6 @@
 
         let climate_endpoint = '{% url 'climate' %}';
 
-        function refresh_chart() {
-            console.log('refresh chart!');
-        }
-
         function refresh_climate() {
             console.log('refresh last climate data from DB!');
             $.ajax({
@@ -31,19 +27,15 @@
             console.log('STARTING refresh');
             refresh_climate();
             setInterval('refresh_climate()', 10000);
-            $('.container').on('click', '#bathroom_week', function () {
+            $('.container').on('click', '#bathroom_chart', function () {
                 this.blur(); // off focus on button after click
-                console.log('click!!!!');
                 let val = $(this).attr('value');
-                //refresh_chart();
                 $.ajax({
                 type: 'get',
-                async: true,
                 url: '/bathroom/api/chart/' + val,
                 //data: {'period': $(this).attr('value')},
                 }).done(function (data) {
                     $('#data_chart').html(data);
-                    //console.log(data);
                     console.log('chart refresh OK')
                 }).fail(function () {
                     console.log('"Sorry. Server unavailable. "');
@@ -72,7 +64,6 @@
         <li class="active"><a data-toggle="tab" href="#home">Climate</a></li>
         <li><a id="chartupdate" data-toggle="tab" href="#menu1">Chart</a></li>
         <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-        <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
       </ul>
 
       <div class="tab-content">
@@ -83,9 +74,26 @@
         <div id="menu1" class="tab-pane fade">
 
           <h3>Chart</h3>
-          <button id="bathroom_week" value="7" class="btn btn-info btn-sm">Last week</button>
+
+            <div class="col-xs-15 block-button">
+              <button id="bathroom_chart" value="1" class="btn btn-success btn-sm">24 h</button>
+              <button id="bathroom_chart" value="7" class="btn btn-warning btn-sm">Last week</button>
+              <button id="bathroom_chart" value="30" class="btn btn-info btn-sm">Last month</button>
+            </div>
+
+            <div class="col-xs-15">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Day input">
+                  <span class="input-group-btn">
+                    <button class="btn btn-info" type="button">Find</button>
+                  </span>
+                </div>
+            </div>
+
+
           <p>{% include 'iot/bathroom_chart.html' %}</p>
         </div>
+
         <div id="menu2" class="tab-pane fade">
           <h3>Menu 2</h3>
           <div class="row">
@@ -93,10 +101,6 @@
                   Hello World!
               </div>
           </div>
-        </div>
-        <div id="menu3" class="tab-pane fade">
-          <h3>Menu 3</h3>
-          <p>Hello</p>
         </div>
       </div>
     </div>

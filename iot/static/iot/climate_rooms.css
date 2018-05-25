@@ -2,3 +2,15 @@
     margin-top: 30px;
     max-width: 400px;
 }
+
+.input-group{
+    max-width: 282px;
+}
+
+.form-control{
+    height: 39px;
+}
+
+.block-button{
+    margin-bottom: 5px;
+}
