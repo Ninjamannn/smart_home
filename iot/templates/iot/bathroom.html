@@ -27,7 +27,7 @@
             console.log('STARTING refresh');
             refresh_climate();
             setInterval('refresh_climate()', 10000);
-            $('.container').on('click', '#bathroom_chart', function () {
+            $('.container').on('click', '#certain_chart', function () {
                 this.blur(); // off focus on button after click
                 let val = $(this).attr('value');
                 $.ajax({
@@ -41,6 +41,39 @@
                     console.log('"Sorry. Server unavailable. "');
                 });
             });
+
+            $('.container').on('click', '#input_chart', function () {
+                this.blur();
+                let input_val = $('.form-control').val();
+                console.log(input_val);
+                let formValid = true;
+                $('input').each(function () {
+                    let formGroup = $(this).parents('.form-group');
+                    let glyphicon = formGroup.find('.form-control-feedback');
+                    if (this.checkValidity()) {
+                        formGroup.addClass('has-success').removeClass('has-error');
+                        glyphicon.addClass('glyphicon-ok').removeClass('glyphicon-remove');
+                    }
+                    else {
+                        formGroup.addClass('has-error').removeClass('has-success');
+                        glyphicon.addClass('glyphicon-remove').removeClass('glyphicon-ok');
+                        formValid = false;
+                    }
+                });
+                if (formValid) {
+                    $.ajax({
+                type: 'get',
+                url: '/bathroom/api/chart/' + input_val,
+                //data: {'period': $(this).attr('value')},
+                }).done(function (data) {
+                    $('#data_chart').html(data);
+                    console.log('chart refresh OK')
+                }).fail(function () {
+                    console.log('"Sorry. Server unavailable. "');
+                });
+                }
+
+            })
         });
     </script>
 
@@ -76,17 +109,21 @@
           <h3>Chart</h3>
 
             <div class="col-xs-15 block-button">
-              <button id="bathroom_chart" value="1" class="btn btn-success btn-sm">24 h</button>
-              <button id="bathroom_chart" value="7" class="btn btn-warning btn-sm">Last week</button>
-              <button id="bathroom_chart" value="30" class="btn btn-info btn-sm">Last month</button>
+              <button id="certain_chart" value="1" class="btn btn-success btn-sm">24 h</button>
+              <button id="certain_chart" value="7" class="btn btn-warning btn-sm">Last week</button>
+              <button id="certain_chart" value="30" class="btn btn-info btn-sm">Last month</button>
             </div>
 
-            <div class="col-xs-15">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Day input">
-                  <span class="input-group-btn">
-                    <button class="btn btn-info" type="button">Find</button>
-                  </span>
+            <div class="form-group has-feedback">
+                <div class="col-xs-15">
+                    <div class="input-group">
+                      <label class="sr-only" for="exampleInputEmail2">Day</label>
+                      <input type="number" class="form-control" placeholder="Day input" min="1" max="1000" required="required" pattern=".{6,}">
+                        <span class="glypchart glyphicon form-control-feedback"></span>
+                        <span class="input-group-btn">
+                          <button id="input_chart" class="btn btn-info" type="button">Find</button>
+                        </span>
+                    </div>
                 </div>
             </div>
 
