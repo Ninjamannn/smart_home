@@ -42,21 +42,21 @@
                 });
             });
 
-            $('.container').on('click', '#input_chart', function () {
+            $('.tab-content').on('click', '#input_chart', function () {
                 this.blur();
                 let input_val = $('.form-control').val();
-                console.log(input_val);
+                //console.log(input_val);
                 let formValid = true;
                 $('input').each(function () {
                     let formGroup = $(this).parents('.form-group');
                     let glyphicon = formGroup.find('.form-control-feedback');
                     if (this.checkValidity()) {
                         formGroup.addClass('has-success').removeClass('has-error');
-                        glyphicon.addClass('glyphicon-ok').removeClass('glyphicon-remove');
+                        glyphicon.removeClass('glyphicon-remove');
                     }
                     else {
                         formGroup.addClass('has-error').removeClass('has-success');
-                        glyphicon.addClass('glyphicon-remove').removeClass('glyphicon-ok');
+                        glyphicon.addClass('glyphicon-remove');
                         formValid = false;
                     }
                 });
@@ -107,7 +107,7 @@
         <div id="menu1" class="tab-pane fade">
 
           <h3>Chart</h3>
-
+          <div class="charttest">
             <div class="col-xs-15 block-button">
               <button id="certain_chart" value="1" class="btn btn-success btn-sm">24 h</button>
               <button id="certain_chart" value="7" class="btn btn-warning btn-sm">Last week</button>
@@ -126,7 +126,7 @@
                     </div>
                 </div>
             </div>
-
+          </div>
 
           <p>{% include 'iot/bathroom_chart.html' %}</p>
         </div>

@@ -4,11 +4,14 @@
 }
 
 .input-group{
-    max-width: 282px;
+    position: static;
+    max-width: 259px;
+    width: 259px;
+    height: 36px;
 }
 
 .form-control{
-    height: 39px;
+    height: 36px;
 }
 
 .block-button{

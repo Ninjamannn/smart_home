@@ -56,13 +56,21 @@ def bathroom(request):
     return render(request, 'iot/bathroom.html', {'dht22BathroomData': cht, 'last_data': last_data})
 
 
-def chart(request, as_func=False, default_period=1, **kwargs):       # TODO сделать универсальную функцию для каждого помещения
+def chart(request, as_func=False, default_period=3, **kwargs):       # TODO сделать универсальную функцию для каждого помещения
     if as_func is True:
         period = default_period
     else:
         period = kwargs['period']
-
     day_ago = datetime.date.today().day - period
+
+    if period == 1:
+        chart_text = '24 hours'
+    elif period == 7:
+        chart_text = 'week'
+    elif period == 30:
+        chart_text = 'month'
+    else:
+        chart_text = str(period)+' days'
 
     #Step 1: Create a DataPool with the data we want to retrieve.
     dht22BathroomData = \
@@ -90,7 +98,7 @@ def chart(request, as_func=False, default_period=1, **kwargs):       # TODO сд
                   }}],
             chart_options =
               {'title': {
-                   'text': 'Climate in my bathroom'},
+                   'text': 'Climate in my bathroom in the last ' + chart_text},
                'xAxis': {
                     'title': {
                        'text': 'Date/Time'}}})
