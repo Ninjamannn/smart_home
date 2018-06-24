@@ -9,4 +9,5 @@ urlpatterns = [
     path('bathroom/', views.bathroom, name='bathroom'),
     path('bathroom/api/climate/', views.climate, name='climate'),
     path('bathroom/api/chart/<int:period>', views.chart, name='bathroom_chart'),
+    path('liveroom/', views.liveroom, name='liveroom')
 ]

@@ -1,0 +1,145 @@
+{% extends 'iot/home.html' %}
+{% load staticfiles %}
+
+
+{% block script %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script>
+
+        let climate_endpoint = '{% url 'climate' %}';
+
+        function refresh_climate() {
+            console.log('refresh last climate data from DB!');
+            $.ajax({
+                async: true,
+                url: climate_endpoint,
+                success: function (data) {
+                    //console.log(data);
+                    $('#climate').html(data);
+                    console.log('climat refresh OK')
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            console.log('STARTING refresh');
+            refresh_climate();
+            setInterval('refresh_climate()', 10000);
+            $('.container').on('click', '#certain_chart', function () {
+                this.blur(); // off focus on button after click
+                let val = $(this).attr('value');
+                $.ajax({
+                type: 'get',
+                url: '/bathroom/api/chart/' + val,
+                //data: {'period': $(this).attr('value')},
+                }).done(function (data) {
+                    $('#data_chart').html(data);
+                    console.log('chart refresh OK')
+                }).fail(function () {
+                    console.log('"Sorry. Server unavailable. "');
+                });
+            });
+
+            $('.tab-content').on('click', '#input_chart', function () {
+                this.blur();
+                let input_val = $('.form-control').val();
+                //console.log(input_val);
+                let formValid = true;
+                $('input').each(function () {
+                    let formGroup = $(this).parents('.form-group');
+                    let glyphicon = formGroup.find('.form-control-feedback');
+                    if (this.checkValidity()) {
+                        formGroup.addClass('has-success').removeClass('has-error');
+                        glyphicon.removeClass('glyphicon-remove');
+                    }
+                    else {
+                        formGroup.addClass('has-error').removeClass('has-success');
+                        glyphicon.addClass('glyphicon-remove');
+                        formValid = false;
+                    }
+                });
+                if (formValid) {
+                    $.ajax({
+                type: 'get',
+                url: '/bathroom/api/chart/' + input_val,
+                //data: {'period': $(this).attr('value')},
+                }).done(function (data) {
+                    $('#data_chart').html(data);
+                    console.log('chart refresh OK')
+                }).fail(function () {
+                    console.log('"Sorry. Server unavailable. "');
+                });
+                }
+
+            })
+        });
+    </script>
+
+{% endblock %}
+
+
+{% block title %}
+    live room
+{% endblock %}
+
+
+{% block style %}
+    <link href="{% static 'iot/climate_rooms.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+      <h2>Bathroom</h2>
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Climate</a></li>
+        <li><a id="chartupdate" data-toggle="tab" href="#menu1">Chart</a></li>
+        <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+          <h3>Real time data</h3>
+          <p>{% include 'iot/climate.html' %}</p>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+
+          <h3>Chart</h3>
+          <div class="charttest">
+            <div class="col-xs-15 block-button">
+              <button id="certain_chart" value="1" class="btn btn-success btn-sm">24 h</button>
+              <button id="certain_chart" value="7" class="btn btn-warning btn-sm">Last week</button>
+              <button id="certain_chart" value="30" class="btn btn-info btn-sm">Last month</button>
+            </div>
+
+            <div class="form-group has-feedback">
+                <div class="col-xs-15">
+                    <div class="input-group">
+                      <label class="sr-only" for="exampleInputEmail2">Day</label>
+                      <input type="number" class="form-control" placeholder="Day input" min="1" max="1000" required="required" pattern=".{6,}">
+                        <span class="glypchart glyphicon form-control-feedback"></span>
+                        <span class="input-group-btn">
+                          <button id="input_chart" class="btn btn-info" type="button">Find</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+          <p>{% include 'iot/bathroom_chart.html' %}</p>
+        </div>
+
+        <div id="menu2" class="tab-pane fade">
+          <h3>Menu 2</h3>
+          <div class="row">
+              <div class="col-sm-12">
+                  Hello World!
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

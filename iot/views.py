@@ -56,6 +56,19 @@ def bathroom(request):
     return render(request, 'iot/bathroom.html', {'dht22BathroomData': cht, 'last_data': last_data})
 
 
+@login_required(login_url='login')
+def liveroom(request):
+    last_data = Dht22Bathroom.objects.last()
+    #today = datetime.date.today()
+    #one_week = datetime.timedelta(weeks=1)
+    #week = today - one_week
+    #today_day = today.day
+    #last_week = datetime.date.today().day - 7
+    #datetime__range = [str(week), str(today)]
+    cht = chart(request, as_func=True)
+    return render(request, 'iot/bathroom.html', {'dht22BathroomData': cht, 'last_data': last_data})
+
+
 def chart(request, as_func=False, default_period=3, **kwargs):       # TODO сделать универсальную функцию для каждого помещения
     if as_func is True:
         period = default_period
