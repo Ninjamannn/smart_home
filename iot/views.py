@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 #from django.core.urlresolvers import reverse
 from django.shortcuts import render
-from iot.models import Dht22Bathroom
+from iot.models import Bathroom, Liveroom
 import datetime
 
 
@@ -39,37 +39,37 @@ def log_in(request):
 
 @login_required(login_url='login')
 def climate(request):
-    last_data = Dht22Bathroom.objects.last()
+    last_data = Bathroom.objects.last()
     return render(request, 'iot/climate.html', {'last_data': last_data})
 
 
 @login_required(login_url='login')
 def bathroom(request):
-    last_data = Dht22Bathroom.objects.last()
+    last_data = Bathroom.objects.last()
     #today = datetime.date.today()
     #one_week = datetime.timedelta(weeks=1)
     #week = today - one_week
     #today_day = today.day
     #last_week = datetime.date.today().day - 7
     #datetime__range = [str(week), str(today)]
-    cht = chart(request, as_func=True)
-    return render(request, 'iot/bathroom.html', {'dht22BathroomData': cht, 'last_data': last_data})
+    cht = chart(request, Bathroom, as_func=True)
+    return render(request, 'iot/bathroom.html', {'Data': cht, 'last_data': last_data})
 
 
 @login_required(login_url='login')
 def liveroom(request):
-    last_data = Dht22Bathroom.objects.last()
+    last_data = Bathroom.objects.last()
     #today = datetime.date.today()
     #one_week = datetime.timedelta(weeks=1)
     #week = today - one_week
     #today_day = today.day
     #last_week = datetime.date.today().day - 7
     #datetime__range = [str(week), str(today)]
-    cht = chart(request, as_func=True)
-    return render(request, 'iot/bathroom.html', {'dht22BathroomData': cht, 'last_data': last_data})
+    cht = chart(request, Liveroom, as_func=True)
+    return render(request, 'iot/liveroom.html', {'liveroomData': cht, 'last_data': last_data})
 
 
-def chart(request, as_func=False, default_period=3, **kwargs):       # TODO сделать универсальную функцию для каждого помещения
+def chart(request, model, as_func=False, default_period=3, **kwargs):       # TODO сделать универсальную функцию для каждого помещения
     if as_func is True:
         period = default_period
     else:
@@ -86,11 +86,11 @@ def chart(request, as_func=False, default_period=3, **kwargs):       # TODO сд
         chart_text = str(period)+' days'
 
     #Step 1: Create a DataPool with the data we want to retrieve.
-    dht22BathroomData = \
+    modelData = \
         DataPool(
            series=
             [{'options': {
-               'source': Dht22Bathroom.objects.filter(datetime__day__gte=day_ago)},
+               'source': model.objects.filter(datetime__day__gte=day_ago)},
               'terms': [
                 'datetime',
                 'temp_value',
@@ -99,7 +99,7 @@ def chart(request, as_func=False, default_period=3, **kwargs):       # TODO сд
 
     #Step 2: Create the Chart object
     cht = Chart(
-            datasource = dht22BathroomData,
+            datasource = modelData,
             series_options =
               [{'options':{
                   'type': 'line',
@@ -120,4 +120,4 @@ def chart(request, as_func=False, default_period=3, **kwargs):       # TODO сд
     if as_func is True:
         return cht
     else:
-        return render(request, 'iot/bathroom_chart.html', {'dht22BathroomData': cht})
+        return render(request, 'iot/bathroom_chart.html', {'Data': cht})

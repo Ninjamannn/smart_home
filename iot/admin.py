@@ -1,8 +1,8 @@
 from django.contrib import admin
-from iot.models import Dht22Bathroom, Liveroom
+from iot.models import Bathroom, Liveroom
 
 
-@admin.register(Dht22Bathroom)
+@admin.register(Bathroom)
 class PostAdmin(admin.ModelAdmin):
     pass
 

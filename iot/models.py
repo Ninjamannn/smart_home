@@ -7,7 +7,7 @@ from iot.tasks import bathroom_data
 #from django.contrib.auth import get_user_model
 
 
-class Dht22Bathroom(models.Model):
+class Bathroom(models.Model):
     location = models.CharField('Location', max_length=30)
     type_sensor = models.CharField('Type_sensor', max_length=30)
     temp_value = models.FloatField()
@@ -17,7 +17,7 @@ class Dht22Bathroom(models.Model):
     datetime = models.DateTimeField('Created Date')
 
     def update_data(self):  # В конструкторе инициализацию нельзя!
-        print('Model<Dht22Bathroom>: update data...')
+        print('Model<Bathroom>: update data...')
         temp, hum = bathroom_data()
         self.location = 'Bathroom'
         self.type_sensor = 'Dht22 (HTTP method)'
@@ -26,7 +26,7 @@ class Dht22Bathroom(models.Model):
         #self.datetime = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
         self.datetime = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M")
         self.save()
-        print('Model<Dht22Bathroom>: update OK')
+        print('Model<Bathroom>: update OK')
 
     @staticmethod
     def get_data():
