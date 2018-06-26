@@ -11,6 +11,7 @@ from django.http import HttpResponseRedirect
 #from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from iot.models import Bathroom, Liveroom
+from iot.charts import chart_bathroom, chart_liveroom
 import datetime
 
 
@@ -52,72 +53,21 @@ def bathroom(request):
     #today_day = today.day
     #last_week = datetime.date.today().day - 7
     #datetime__range = [str(week), str(today)]
-    cht = chart(request, Bathroom, as_func=True)
+    cht = chart_bathroom(request, as_func=True)
     return render(request, 'iot/bathroom.html', {'Data': cht, 'last_data': last_data})
 
 
 @login_required(login_url='login')
 def liveroom(request):
-    last_data = Bathroom.objects.last()
+    last_data = Liveroom.objects.last()
     #today = datetime.date.today()
     #one_week = datetime.timedelta(weeks=1)
     #week = today - one_week
     #today_day = today.day
     #last_week = datetime.date.today().day - 7
     #datetime__range = [str(week), str(today)]
-    cht = chart(request, Liveroom, as_func=True)
+    cht = chart_liveroom(request, as_func=True)
     return render(request, 'iot/liveroom.html', {'liveroomData': cht, 'last_data': last_data})
 
 
-def chart(request, model, as_func=False, default_period=3, **kwargs):       # TODO сделать универсальную функцию для каждого помещения
-    if as_func is True:
-        period = default_period
-    else:
-        period = kwargs['period']
-    day_ago = datetime.date.today().day - period
 
-    if period == 1:
-        chart_text = '24 hours'
-    elif period == 7:
-        chart_text = 'week'
-    elif period == 30:
-        chart_text = 'month'
-    else:
-        chart_text = str(period)+' days'
-
-    #Step 1: Create a DataPool with the data we want to retrieve.
-    modelData = \
-        DataPool(
-           series=
-            [{'options': {
-               'source': model.objects.filter(datetime__day__gte=day_ago)},
-              'terms': [
-                'datetime',
-                'temp_value',
-                'hum_value']}
-             ])
-
-    #Step 2: Create the Chart object
-    cht = Chart(
-            datasource = modelData,
-            series_options =
-              [{'options':{
-                  'type': 'line',
-                  'stacking': False},
-                'terms':{
-                  'datetime': [
-                    'temp_value',
-                    'hum_value']
-                  }}],
-            chart_options =
-              {'title': {
-                   'text': 'Climate in my bathroom in the last ' + chart_text},
-               'xAxis': {
-                    'title': {
-                       'text': 'Date/Time'}}})
-
-    #Step 3: Send the chart object to the template.
-    if as_func is True:
-        return cht
-    else:
-        return render(request, 'iot/bathroom_chart.html', {'Data': cht})
