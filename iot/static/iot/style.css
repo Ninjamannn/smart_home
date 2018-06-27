@@ -10,9 +10,15 @@ h2 {
     color: blue;
 }
 */
+/*
 li.dropdown {
     padding-top: 4px;
 }
+*/
+.navbar-brand {
+    padding-top: 13px;
+}
+
 
 .navbar {
   position: relative;
