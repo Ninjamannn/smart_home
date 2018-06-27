@@ -39,35 +39,43 @@ def log_in(request):
 
 
 @login_required(login_url='login')
-def climate(request):
+def climate_bathroom(request):
     last_data = Bathroom.objects.last()
     return render(request, 'iot/climate.html', {'last_data': last_data})
 
 
 @login_required(login_url='login')
-def bathroom(request):
+def bathroom(request, **kwargs):
+    print(kwargs)
+    if kwargs:
+        cht = chart_bathroom(period=kwargs['period'])
+        return render(request, 'iot/bathroom_chart.html', {'Data': cht})
     last_data = Bathroom.objects.last()
-    #today = datetime.date.today()
-    #one_week = datetime.timedelta(weeks=1)
-    #week = today - one_week
-    #today_day = today.day
-    #last_week = datetime.date.today().day - 7
-    #datetime__range = [str(week), str(today)]
-    cht = chart_bathroom(request, as_func=True)
+    cht = chart_bathroom(as_func=True)
     return render(request, 'iot/bathroom.html', {'Data': cht, 'last_data': last_data})
 
 
 @login_required(login_url='login')
-def liveroom(request):
+def climate_liveroom(request):
     last_data = Liveroom.objects.last()
+    return render(request, 'iot/climate.html', {'last_data': last_data})
+
+
+@login_required(login_url='login')
+def liveroom(request, **kwargs):
+    print(kwargs)
+    if kwargs:
+        cht = chart_liveroom(period=kwargs['period'])
+        return render(request, 'iot/liveroom_chart.html', {'Data': cht})
+    last_data = Liveroom.objects.last()
+    cht = chart_liveroom(as_func=True)
     #today = datetime.date.today()
     #one_week = datetime.timedelta(weeks=1)
     #week = today - one_week
     #today_day = today.day
     #last_week = datetime.date.today().day - 7
     #datetime__range = [str(week), str(today)]
-    cht = chart_liveroom(request, as_func=True)
-    return render(request, 'iot/liveroom.html', {'liveroomData': cht, 'last_data': last_data})
+    return render(request, 'iot/liveroom.html', {'Data': cht, 'last_data': last_data})
 
 
 

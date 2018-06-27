@@ -32,7 +32,7 @@
                 let val = $(this).attr('value');
                 $.ajax({
                 type: 'get',
-                url: '/bathroom/api/chart/' + val,
+                url: '/liveroom/api/chart/' + val,
                 //data: {'period': $(this).attr('value')},
                 }).done(function (data) {
                     $('#data_chart').html(data);
@@ -63,7 +63,7 @@
                 if (formValid) {
                     $.ajax({
                 type: 'get',
-                url: '/bathroom/api/chart/' + input_val,
+                url: '/liveroom/api/chart/' + input_val,
                 //data: {'period': $(this).attr('value')},
                 }).done(function (data) {
                     $('#data_chart').html(data);
@@ -92,7 +92,7 @@
 
 {% block content %}
     <div class="container">
-      <h2>Bathroom</h2>
+      <h2>Liveroom</h2>
       <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#home">Climate</a></li>
         <li><a id="chartupdate" data-toggle="tab" href="#menu1">Chart</a></li>

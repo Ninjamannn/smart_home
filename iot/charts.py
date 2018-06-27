@@ -2,8 +2,10 @@ import datetime
 from django.shortcuts import render
 from chartit import DataPool, Chart
 
+from iot.models import Bathroom, Liveroom
 
-def chart_bathroom(request, as_func=False, default_period=3, **kwargs):
+
+def chart_bathroom(as_func=False, default_period=3, **kwargs):
     model = Bathroom
 
     if as_func is True:
@@ -53,13 +55,10 @@ def chart_bathroom(request, as_func=False, default_period=3, **kwargs):
                        'text': 'Date/Time'}}})
 
     #Step 3: Send the chart object to the template.
-    if as_func is True:
-        return cht
-    else:
-        return render(request, 'iot/bathroom_chart.html', {'Data': cht})
+    return cht
 
 
-def chart_liveroom(request, as_func=False, default_period=3, **kwargs):
+def chart_liveroom(as_func=False, default_period=3, **kwargs):
     model = Liveroom
 
     if as_func is True:
@@ -103,13 +102,10 @@ def chart_liveroom(request, as_func=False, default_period=3, **kwargs):
                   }}],
             chart_options =
               {'title': {
-                   'text': 'Climate in my bathroom in the last ' + chart_text},
+                   'text': 'Climate in my liveroom in the last ' + chart_text},
                'xAxis': {
                     'title': {
                        'text': 'Date/Time'}}})
 
     #Step 3: Send the chart object to the template.
-    if as_func is True:
-        return cht
-    else:
-        return render(request, 'iot/bathroom_chart.html', {'Data': cht})
+    return cht

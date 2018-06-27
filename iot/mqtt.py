@@ -2,8 +2,7 @@ from paho.mqtt import client
 import paho.mqtt.subscribe as subscribe
 
 import iot.models
-
-from threading import Timer
+import json
 from smart_home.celery import app
 
 MQTT_USER = "bzxuzryj"
@@ -14,13 +13,13 @@ MQTT_PORT = 16547
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code: %s" % rc)
-    # print(client, userdata, flags)
     client.subscribe("liveroom")
 
 
 def on_message(client, userdata, msg):
     print("%s: %s" % (msg.topic, msg.payload.decode('utf-8')))
-    update_liveroom_data(msg.payload.decode('utf-8'))
+    data = msg.payload.decode('utf-8')
+    update_liveroom_data(json.loads(data))
 
 
 @app.task
@@ -37,10 +36,10 @@ def mqtt_start():
     print('mqtt started')
 
 
-def update_liveroom_data(a):
+def update_liveroom_data(data):
     print('@app.task <update_liveroom_data>: starting update...')
     task = iot.models.Liveroom()
-    task.update_data(a)
+    task.update_data(data)
 
 
 """
