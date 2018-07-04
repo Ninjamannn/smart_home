@@ -46,12 +46,11 @@ def climate_bathroom(request):
 
 @login_required(login_url='login')
 def bathroom(request, **kwargs):
-    print(kwargs)
     if kwargs:
         cht = chart_bathroom(period=kwargs['period'])
         return render(request, 'iot/bathroom_chart.html', {'Data': cht})
     last_data = Bathroom.objects.last()
-    cht = chart_bathroom(as_func=True)
+    cht = chart_bathroom(period=3)
     return render(request, 'iot/bathroom.html', {'Data': cht, 'last_data': last_data})
 
 
@@ -63,12 +62,11 @@ def climate_liveroom(request):
 
 @login_required(login_url='login')
 def liveroom(request, **kwargs):
-    print(kwargs)
     if kwargs:
         cht = chart_liveroom(period=kwargs['period'])
         return render(request, 'iot/liveroom_chart.html', {'Data': cht})
     last_data = Liveroom.objects.last()
-    cht = chart_liveroom(as_func=True)
+    cht = chart_liveroom(period=3)
     #today = datetime.date.today()
     #one_week = datetime.timedelta(weeks=1)
     #week = today - one_week

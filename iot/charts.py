@@ -5,14 +5,11 @@ from chartit import DataPool, Chart
 from iot.models import Bathroom, Liveroom
 
 
-def chart_bathroom(as_func=False, default_period=3, **kwargs):
+def chart_bathroom(**kwargs):
     model = Bathroom
 
-    if as_func is True:
-        period = default_period
-    else:
-        period = kwargs['period']
-    day_ago = datetime.date.today().day - period
+    period = kwargs['period']
+    date_range = datetime.date.today() - datetime.timedelta(period)
 
     if period == 1:
         chart_text = '24 hours'
@@ -23,12 +20,13 @@ def chart_bathroom(as_func=False, default_period=3, **kwargs):
     else:
         chart_text = str(period)+' days'
 
+
     #Step 1: Create a DataPool with the data we want to retrieve.
     modelData = \
         DataPool(
            series=
             [{'options': {
-               'source': model.objects.filter(datetime__day__gte=day_ago)},
+               'source': model.objects.filter(datetime__gte=date_range)},
               'terms': [
                 'datetime',
                 'temp_value',
@@ -58,14 +56,11 @@ def chart_bathroom(as_func=False, default_period=3, **kwargs):
     return cht
 
 
-def chart_liveroom(as_func=False, default_period=3, **kwargs):
+def chart_liveroom(**kwargs):
     model = Liveroom
 
-    if as_func is True:
-        period = default_period
-    else:
-        period = kwargs['period']
-    day_ago = datetime.date.today().day - period
+    period = kwargs['period']
+    date_range = datetime.date.today() - datetime.timedelta(period)
 
     if period == 1:
         chart_text = '24 hours'
@@ -81,7 +76,7 @@ def chart_liveroom(as_func=False, default_period=3, **kwargs):
         DataPool(
            series=
             [{'options': {
-               'source': model.objects.filter(datetime__day__gte=day_ago)},
+               'source': model.objects.filter(datetime__gte=date_range)},
               'terms': [
                 'datetime',
                 'temp_value',
