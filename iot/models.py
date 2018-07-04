@@ -23,7 +23,6 @@ class Bathroom(models.Model):
         self.type_sensor = 'Dht22 (HTTP method)'
         self.temp_value = temp
         self.hum_value = hum
-        #self.datetime = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
         self.datetime = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M")
         self.save()
         print('Model<Bathroom>: update OK')
