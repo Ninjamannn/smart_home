@@ -13,8 +13,8 @@ app.config_from_object('django.conf:settings')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    'send-report-every-single-minute': {
+    'send-report-by-schedule': {
         'task': 'iot.tasks.update_dht22_bathroom',
-        'schedule': crontab(),  # minute='*/15' Execute every 15 minutes.
+        'schedule': crontab(minute='*/2'),  # minute='*/15' Execute every 15 minutes.
     },
 }

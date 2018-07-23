@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'kf$zwp(0-1$to)la22-q4pujx3ca^#z)_+g!n7m4c@_tm8hmb#')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'kf$zwp(0-1$to)la22-q4pnbr3ca^#z)_+g!n7m4c@_tm8hmb#')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv('DJANGO_DEBUG', True))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.myiothome.ml', 'myiothome.ml', '127.0.0.1', '127.0.0.1:8000']
 
 
 # Application definition
