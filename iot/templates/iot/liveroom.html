@@ -11,20 +11,20 @@
         let climate_endpoint = '{% url 'liveroom_climate' %}';
 
         function refresh_climate() {
-            console.log('refresh last climate data from DB!');
+            //console.log('refresh last climate data from DB!');
             $.ajax({
                 async: true,
                 url: climate_endpoint,
                 success: function (data) {
                     //console.log(data);
                     $('#climate').html(data);
-                    console.log('climat refresh OK')
+                    //console.log('climat refresh OK')
                 }
             });
         }
 
         $(document).ready(function () {
-            console.log('STARTING refresh');
+            //console.log('STARTING refresh');
             refresh_climate();
             setInterval('refresh_climate()', 10000);
             $('.container').on('click', '#certain_chart', function () {
@@ -36,9 +36,9 @@
                 //data: {'period': $(this).attr('value')},
                 }).done(function (data) {
                     $('#data_chart').html(data);
-                    console.log('chart refresh OK')
+                    //console.log('chart refresh OK')
                 }).fail(function () {
-                    console.log('"Sorry. Server unavailable. "');
+                    //console.log('"Sorry. Server unavailable. "');
                 });
             });
 
@@ -67,9 +67,9 @@
                 //data: {'period': $(this).attr('value')},
                 }).done(function (data) {
                     $('#data_chart').html(data);
-                    console.log('chart refresh OK')
+                    //console.log('chart refresh OK')
                 }).fail(function () {
-                    console.log('"Sorry. Server unavailable. "');
+                    //console.log('"Sorry. Server unavailable. "');
                 });
                 }
 
