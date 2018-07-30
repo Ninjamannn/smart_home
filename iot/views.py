@@ -76,4 +76,5 @@ def liveroom(request, **kwargs):
     return render(request, 'iot/liveroom.html', {'Data': cht, 'last_data': last_data})
 
 
-
+def underconstruction(request):
+    return render(request, 'iot/underconstruction.html')

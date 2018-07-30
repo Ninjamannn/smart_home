@@ -16,4 +16,6 @@ urlpatterns = [
     path('liveroom/', views.liveroom, name='liveroom'),
     path('liveroom/api/climate/', views.climate_liveroom, name='liveroom_climate'),
     path('liveroom/api/chart/<int:period>', views.liveroom, name='liveroom_chart'),
+
+    path('underconstruction/', views.underconstruction, name='underconstruction'),
 ]

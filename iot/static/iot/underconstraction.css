@@ -1,0 +1,27 @@
+/*
+body {
+    background: url(images/underconst.jpg) no-repeat center center fixed;
+    background-size: 100% auto;
+}
+*/
+body {
+  background-image: url(images/underconst.jpg);
+
+  /* Выравнивание картинки по центру */
+  background-position: center center;
+
+  background-repeat: no-repeat;
+
+  background-attachment: fixed;
+
+  /* Изменение размера картинки, в зависимости от экрана */
+  background-size: 100% auto;
+
+  background-color: #222222;
+}
+
+@media only screen and (max-width: 767px) {
+  body {
+    background-image: url(images/underconst_mobile.jpg);
+  }
+}
