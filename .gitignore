@@ -110,3 +110,4 @@ venv.bak/
 /celerybeat-schedule.dat
 /celerybeat-schedule.bak
 /celerybeat.pid
+/extra/db.sqlite3
