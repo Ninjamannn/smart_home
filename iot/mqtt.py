@@ -25,7 +25,7 @@ def mqtt_start():
     '''
     запускать отдельным процессом mqtt_start.delay()
     '''
-    subscriber = client.Client(client_id="ESP8266_liveroom_testserver")
+    subscriber = client.Client(client_id="ESP8266_liveroom")
     subscriber.on_connect = on_connect
     subscriber.on_message = on_message
     subscriber.username_pw_set(MQTT_USER, password=MQTT_PASS)

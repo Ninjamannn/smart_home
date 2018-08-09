@@ -24,7 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('S_KEY', 'kf$zwp(0-1$to)76hn-q4pujx3ca^#z)_+g!n7m4c@_tm8hmb#')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.getenv('DEBUG', True))
+#DEBUG = bool(os.getenv('DEBUG', True))
+DEBUG = False
 
 ALLOWED_HOSTS = ['www.myiothome.ml', 'myiothome.ml', '127.0.0.1', '127.0.0.1:8000']
 
