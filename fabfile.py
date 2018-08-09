@@ -16,7 +16,7 @@ def to_vagrant():
     env.user = config['User']
     env.repo_url = 'https://github.com/Ninjamannn/smart_home.git'
     env.branch = 'develop'  # git branch
-    env.project = '/home/{user}/project'.format(user=env.user)
+    env.project = '/home/{user}/project/smart_home'.format(user=env.user)
     env.venvpyton = '/home/{user}/env/iot/bin'.format(user=env.user)
     env.key_filename = config['IdentityFile']  # path to SSH Key
 
@@ -30,7 +30,7 @@ def to_production():
     env.user = 'ubuntu'
     env.repo_url = 'https://github.com/Ninjamannn/smart_home.git'
     env.branch = 'develop'  # git branch
-    env.project = '/home/{user}/project'.format(user=env.user)
+    env.project = '/home/{user}/project/smart_home'.format(user=env.user)
     env.venvpyton = '/home/{user}/env/iot/bin'.format(user=env.user)
     env.key_filename = '/home/alex/aws/aws_myiothome/awstest.pem'  # path to SSH Key
 
@@ -42,7 +42,7 @@ def uname():
 
 @task
 def deploy():
-    site_folder = '/home/{user}/project/'.format(user=env.user)
+    site_folder = '/home/{user}/project/smart_home/'.format(user=env.user)
     run('mkdir -p {site_folder}'.format(site_folder=site_folder))
     with cd(site_folder):
         #_get_latest_source()

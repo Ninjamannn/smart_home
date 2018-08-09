@@ -47,7 +47,7 @@ def chart_bathroom(**kwargs):
                   }}],
             chart_options =
               {'title': {
-                   'text': 'Climate in my bathroom in the last ' + chart_text},
+                   'text': 'Climate in my bathroom for the last ' + chart_text},
                'xAxis': {
                     'title': {
                        'text': 'Date/Time'}}})
@@ -97,7 +97,7 @@ def chart_liveroom(**kwargs):
                   }}],
             chart_options =
               {'title': {
-                   'text': 'Climate in my liveroom in the last ' + chart_text},
+                   'text': 'Climate in my living room for the last ' + chart_text},
                'xAxis': {
                     'title': {
                        'text': 'Date/Time'}}})
