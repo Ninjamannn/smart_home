@@ -24,7 +24,7 @@ def to_vagrant():
 @task
 def to_production():
     """
-    if you deploy on production server run: 'fab to_vagrant deploy'
+    if you deploy on production server run: 'fab to_production deploy'
     """
     env.hosts = ['ec2-54-93-223-63.eu-central-1.compute.amazonaws.com']
     env.user = 'ubuntu'
@@ -92,3 +92,5 @@ def _update_static_files():
 @task
 def _update_database():
     run('{venvpyton}/python manage.py migrate --noinput'.format(venvpyton=env.venvpyton))
+
+# TODO: reset redis + celery(?) resolve Connected with result code: 0
