@@ -38,19 +38,3 @@ def update_liveroom_data(data):
     print('@app.task <update_liveroom_data>: starting update...')
     task = iot.models.Liveroom()
     task.update_data(data)
-
-
-"""
-a = mqtt_start()
-print(a)
-
-for x in range(1000):
-    a = x**1000000
-    print("----------------------")
-    #print(a)
-"""
-"""
-t = Timer(10, mqtt_start)
-t.start()
-ненужные коннекты!
-"""

@@ -1,10 +1,6 @@
 from datetime import datetime
 from django.db import models
-from django.db.models import DateField
-from django.utils import timezone
-from django.conf import settings
 from iot.tasks import bathroom_data
-#from django.contrib.auth import get_user_model
 
 
 class Bathroom(models.Model):
@@ -12,18 +8,15 @@ class Bathroom(models.Model):
     type_sensor = models.CharField('Type_sensor', max_length=30)
     temp_value = models.FloatField()
     hum_value = models.FloatField()
-    #date = models.DateTimeField('Created Date', default=timezone.localtime(timezone.now()))
-    #date = models.DateTimeField('Created Date', auto_now=True, editable=True) не отоюражает в админ
     datetime = models.DateTimeField('Created Date')
 
-    def update_data(self):  # В конструкторе инициализацию нельзя!
+    def update_data(self):
         print('Model<Bathroom>: update data...')
         temp, hum = bathroom_data()
         self.location = 'Bathroom'
         self.type_sensor = 'Dht22 (HTTP method)'
         self.temp_value = temp
         self.hum_value = hum
-        #self.datetime = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
         self.datetime = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M")
         self.save()
         print('Model<Bathroom>: update OK')

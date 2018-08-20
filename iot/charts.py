@@ -1,5 +1,4 @@
 import datetime
-from django.shortcuts import render
 from chartit import DataPool, Chart
 
 from iot.models import Bathroom, Liveroom

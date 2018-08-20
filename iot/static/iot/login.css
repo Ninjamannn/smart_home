@@ -8,7 +8,6 @@
     color: #d9d9d9;
 }
 
-
 .container {
     height: 326px;
     position: absolute;
@@ -23,10 +22,16 @@ body, html {
     height: 100%;
 }
 
-
 body {
     background: url(images/lock_door.jpg);
     background-repeat:no-repeat;
     background-size: cover;
     background-position:center center;
+    background-color: #444444;
+}
+
+@media only screen and (max-width: 767px) {
+  body {
+    background-image: url(images/lock_door_mobile.jpg);
+  }
 }

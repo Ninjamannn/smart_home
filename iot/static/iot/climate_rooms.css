@@ -26,3 +26,11 @@
     padding-top: 3px;
     padding-right: 90px;
 }
+
+body {
+    background: url(images/bath-426383_1920.jpg) fixed;
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-position:center center;
+    background-color: #444444;
+}
