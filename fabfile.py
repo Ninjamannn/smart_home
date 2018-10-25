@@ -26,13 +26,13 @@ def to_production():
     """
     if you deploy on production server run: 'fab to_production deploy'
     """
-    env.hosts = ['ec2-54-93-223-63.eu-central-1.compute.amazonaws.com']
+    env.hosts = ['52.59.248.255']
     env.user = 'ubuntu'
     env.repo_url = 'https://github.com/Ninjamannn/smart_home.git'
     env.branch = 'develop'  # git branch
     env.project = '/home/{user}/project/smart_home'.format(user=env.user)
     env.venvpyton = '/home/{user}/env/iot/bin'.format(user=env.user)
-    env.key_filename = '/home/alex/aws/aws_myiothome/awstest.pem'  # path to SSH Key
+    env.key_filename = '/home/alex/aws/zlata_aws/zlata_aws.pem'  # path to SSH Key
 
 
 @task
@@ -45,10 +45,10 @@ def deploy():
     site_folder = '/home/{user}/project/smart_home/'.format(user=env.user)
     run('mkdir -p {site_folder}'.format(site_folder=site_folder))
     with cd(site_folder):
-        #_get_latest_source()
+        _get_latest_source()
         _update_virtualenv()
         #_create_or_update_dotenv()
-        #_update_static_files()
+        _update_static_files()
         #_update_database()
 
 

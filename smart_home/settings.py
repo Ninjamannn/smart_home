@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,13 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'kf$zwp(0-1$to)la22-q4pnbr3ca^#z)_+g!n7m4c@_tm8hmb#')
-SECRET_KEY = os.environ.get('S_KEY', 'kf$zwp(0-1$to)76hn-q4pujx3ca^#z)_+g!n7m4c@_tm8hmb#')
+PROJECT_NAME = config('PROJECT_NAME', cast=str)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = bool(os.getenv('DEBUG', True))
-DEBUG = True     # TODO: check!
+SECRET_KEY = config('SECRET_KEY', cast=str)
+
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = ['www.myiothome.ml', 'myiothome.ml', '127.0.0.1', '127.0.0.1:8000']
 
