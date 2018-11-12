@@ -32,6 +32,7 @@ def to_production():
     env.branch = 'develop'  # git branch
     env.project = '/home/{user}/project/smart_home'.format(user=env.user)
     env.venvpyton = '/home/{user}/env/iot/bin'.format(user=env.user)
+    env.venvpyton_path = '/home/{user}/env/iot'.format(user=env.user)
     env.key_filename = '/home/alex/aws/zlata_aws/zlata_aws.pem'  # path to SSH Key
 
 
@@ -47,8 +48,8 @@ def deploy():
     with cd(site_folder):
         _get_latest_source()
         _update_virtualenv()
-        #_create_or_update_dotenv()
-        _update_static_files()
+        _create_or_update_dotenv()
+        #_update_static_files()
         #_update_database()
 
 
@@ -64,23 +65,28 @@ def _get_latest_source():
 
 @task
 def _update_virtualenv():
+    if not exists('{venvpyton_path}'.format(venvpyton_path=env.venvpyton_path), verbose=True):
+        run('mkdir -p {venvpyton_path}'.format(venvpyton_path=env.venvpyton_path))
+
     if not exists('{venvpyton}/pip3'.format(venvpyton=env.venvpyton), verbose=True):
         run('sudo apt -y install python3-pip')
         run('sudo pip3 install virtualenv')
-        run('virtualenv --no-site-packages -p python3.5 /home/{user}/env/iot'.format(user=env.user))
+        run('virtualenv --no-site-packages -p python3.6 /home/{user}/env/iot'.format(user=env.user))
+    run('source {venvpyton}/activate'.format(venvpyton=env.venvpyton))
     run('{venvpyton}/pip3 install -r requirements.txt'.format(venvpyton=env.venvpyton))
 
 
 @task
 def _create_or_update_dotenv():
-    append('{PROJECT}/testenv.env'.format(PROJECT=env.project), 'DJANGO_DEBUG_FALSE=y')
-    append('{PROJECT}/testenv.env'.format(PROJECT=env.project), 'SITENAME={host}'.format(host=env.hosts))
-    current_contents = run('cat {PROJECT}/testenv.env'.format(PROJECT=env.project))
+    append('{PROJECT}/.env'.format(PROJECT=env.project), 'DEBUG=False')
+    append('{PROJECT}/.env'.format(PROJECT=env.project), 'PROJECT_NAME=IOT_home')
+    append('{PROJECT}/.env'.format(PROJECT=env.project), 'SITENAME={host}'.format(host=env.hosts))
+    current_contents = run('cat {PROJECT}/.env'.format(PROJECT=env.project))
     if 'DJANGO_SECRET_KEY' not in current_contents:
         new_secret = ''.join(random.SystemRandom().choices(
             'abcdefghijklmnopqrstuvwxyz0123456789', k=50
         ))
-        append('{PROJECT}/testenv.env'.format(PROJECT=env.project), 'DJANGO_SECRET_KEY={new_secret}'.format(new_secret=new_secret))
+        append('{PROJECT}/.env'.format(PROJECT=env.project), 'DJANGO_SECRET_KEY={new_secret}'.format(new_secret=new_secret))
 
 
 @task
