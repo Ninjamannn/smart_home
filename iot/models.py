@@ -37,7 +37,6 @@ class Liveroom(models.Model):
     type_sensor = models.CharField('Type_sensor', max_length=30)
     temp_value = models.FloatField()
     hum_value = models.FloatField()
-
     datetime = models.DateTimeField('Created Date')
 
     def update_data(self, data):

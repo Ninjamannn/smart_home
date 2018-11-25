@@ -2,11 +2,13 @@ from paho.mqtt import client
 import iot.models
 import json
 from smart_home.celery import app
+from decouple import config
 
-MQTT_USER = "bzxuzryj"
-MQTT_PASS = "NK7BEO4cSB7k"
-MQTT_HOST = "m23.cloudmqtt.com"
-MQTT_PORT = 16547
+
+MQTT_USER = config('MQTT_USER', cast=str)
+MQTT_PASS = config('MQTT_PASS', cast=str)
+MQTT_HOST = config('MQTT_HOST', cast=str)
+MQTT_PORT = config('MQTT_PORT', cast=int)
 
 
 def on_connect(client, userdata, flags, rc):
