@@ -1,11 +1,10 @@
 import time
-
-import iot.models
 import json
 import urllib.request
+import iot.models
 from smart_home.celery import app
 
-from iot.mqtt import mqtt_start
+#from iot.mqtt import mqtt_start
 
 
 @app.task

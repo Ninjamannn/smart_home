@@ -75,25 +75,36 @@ def chart_liveroom(**kwargs):
         DataPool(
            series=
             [{'options': {
-               'source': model.objects.filter(datetime__gte=date_range)},
+               'source': model.objects.all().filter(type_value='temp').filter(datetime__gte=date_range)},
               'terms': [
-                'datetime',
-                'temp_value',
-                'hum_value']}
+                  {'datetime': 'datetime',
+                   'temp': 'value'}, ]},
+             {'options': {
+               'source': model.objects.all().filter(type_value='hum').filter(datetime__gte=date_range)},
+              'terms': [
+                  {'humidity': 'value',
+                   'datetime_hum': 'datetime'}]}
              ])
 
     #Step 2: Create the Chart object
     cht = Chart(
-            datasource = modelData,
+            datasource=modelData,
             series_options =
               [{'options':{
                   'type': 'line',
                   'stacking': False},
                 'terms':{
                   'datetime': [
-                    'temp_value',
-                    'hum_value']
-                  }}],
+                    'temp', ]
+                  }},
+               {'options': {
+                   'type': 'line',
+                   'stacking': False},
+                   'terms': {
+                       'datetime_hum': [
+                           'humidity', ]
+                   }},
+              ],
             chart_options =
               {'title': {
                    'text': 'Climate in my living room for the last ' + chart_text},

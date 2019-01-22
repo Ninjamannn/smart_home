@@ -48,7 +48,12 @@ def bathroom(request, **kwargs):
 
 @login_required(login_url='login')
 def climate_liveroom(request):
-    last_data = Liveroom.objects.last()
+    last_data = dict(
+        temp_value=Liveroom.objects.filter(type_value="temp").last().value,
+        hum_value=Liveroom.objects.filter(type_value="hum").last().value,
+        datetime=Liveroom.objects.last().datetime,
+    )
+
     return render(request, 'iot/climate.html', {'last_data': last_data})
 
 
