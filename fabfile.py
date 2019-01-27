@@ -42,15 +42,24 @@ def uname():
 
 
 @task
+def test():
+    run('supervisorctl status all')
+
+
+@task
 def deploy():
+    run('supervisorctl stop all')
+    run('supervisorctl status all')
     site_folder = '/home/{user}/project/smart_home/'.format(user=env.user)
     run('mkdir -p {site_folder}'.format(site_folder=site_folder))
     with cd(site_folder):
         _get_latest_source()
         _update_virtualenv()
         _create_or_update_dotenv()
-        #_update_static_files()
-        #_update_database()
+        _update_static_files()
+        _update_database()
+    run('supervisorctl start all')
+    run('supervisorctl status all')
 
 
 @task
