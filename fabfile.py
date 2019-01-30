@@ -98,10 +98,17 @@ def _create_or_update_dotenv():
         append('{PROJECT}/.env'.format(PROJECT=env.project), 'DJANGO_SECRET_KEY={new_secret}'.format(new_secret=new_secret))
 
 
+# for vagrant
+# @task
+# def _update_static_files():
+#     run('{venvpyton}/python {PROJECT}/manage.py collectstatic --noinput'
+#         .format(venvpyton='/home/vagrant/env/iot/bin', PROJECT=env.project))
+
+
 @task
 def _update_static_files():
     run('{venvpyton}/python {PROJECT}/manage.py collectstatic --noinput'
-        .format(venvpyton='/home/vagrant/env/iot/bin', PROJECT=env.project))
+        .format(venvpyton=env.venvpyton, PROJECT=env.project))
 
 
 @task

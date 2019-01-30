@@ -112,10 +112,9 @@ venv.bak/
 /celerybeat.pid
 /extra/db.sqlite3
 
-iot/static/iot/images/bath-426383_1920.jpg
+
 iot/static/iot/images/bathroom.jpg
 iot/static/iot/images/black-and-white.jpg
-iot/static/iot/images/living-room-3035878_1280.jpg
 iot/static/iot/responsive.css
 iot/static/iot/stylesconst.css
 iot/templates/iot/03-comming-soon.html
