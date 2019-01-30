@@ -43,13 +43,13 @@ def uname():
 
 @task
 def test():
-    run('supervisorctl status all')
+    run('sudo supervisorctl status all')
 
 
 @task
 def deploy():
-    run('supervisorctl stop all')
-    run('supervisorctl status all')
+    run('sudo supervisorctl stop all')
+    run('sudo supervisorctl status all')
     site_folder = '/home/{user}/project/smart_home/'.format(user=env.user)
     run('mkdir -p {site_folder}'.format(site_folder=site_folder))
     with cd(site_folder):
@@ -58,8 +58,8 @@ def deploy():
         _create_or_update_dotenv()
         _update_static_files()
         _update_database()
-    run('supervisorctl start all')
-    run('supervisorctl status all')
+    run('sudo supervisorctl start all')
+    run('sudo supervisorctl status all')
 
 
 @task
@@ -91,7 +91,7 @@ def _create_or_update_dotenv():
     append('{PROJECT}/.env'.format(PROJECT=env.project), 'PROJECT_NAME=IOT_home')
     append('{PROJECT}/.env'.format(PROJECT=env.project), 'SITENAME={host}'.format(host=env.hosts))
     current_contents = run('cat {PROJECT}/.env'.format(PROJECT=env.project))
-    if 'DJANGO_SECRET_KEY' not in current_contents:
+    if 'SECRET_KEY' not in current_contents:
         new_secret = ''.join(random.SystemRandom().choices(
             'abcdefghijklmnopqrstuvwxyz0123456789', k=50
         ))

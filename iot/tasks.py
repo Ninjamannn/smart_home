@@ -3,8 +3,7 @@ import json
 import urllib.request
 import iot.models
 from smart_home.celery import app
-
-#from iot.mqtt import mqtt_start
+from iot.mqtt import mqtt_start
 
 
 @app.task
@@ -39,3 +38,8 @@ def update_dht22_bathroom():
     dht22 = iot.models.Bathroom()
     dht22.update_data()
     print('@app.task <update_dht22Bathroom>: data has been updated from %s' % dht22.location)
+
+
+@app.task
+def mqtt_service_start():
+    mqtt_start()
