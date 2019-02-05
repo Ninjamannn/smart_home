@@ -1,0 +1,21 @@
+<div id="climate" class="climate-panel">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Date</h3>
+      </div>
+      <div class="panel-body">
+          {{ last_data.datetime|date:"d/m/Y" }} {{ last_data.datetime|time:"H:i" }}
+      </div>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Temperature</h3>
+      </div>
+      <div class="panel-body">
+          {{ last_data.temp_value }} &#8451;
+      </div>
+    </div>
+</div>
+
+

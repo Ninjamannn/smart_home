@@ -1,11 +1,8 @@
 import time
-
-import iot.models
 import json
 import urllib.request
+import iot.models
 from smart_home.celery import app
-
-from iot.mqtt import mqtt_start
 
 
 @app.task
@@ -17,10 +14,10 @@ def bathroom_data():
     response = urllib.request.urlopen('https://api.thingspeak.com/channels/120869/feeds.json?results=1')
     data = response.read()
     encoding = response.info().get_content_charset()
-    JSON_object = json.loads(data.decode(encoding))
+    json_object = json.loads(data.decode(encoding))
 
-    temp = float(JSON_object['feeds'][0]['field1'])
-    humidity = float(JSON_object['feeds'][0]['field2'])
+    temp = float(json_object['feeds'][0]['field1'])
+    humidity = float(json_object['feeds'][0]['field2'])
     print('@app.task <bathroom_data>: data received!')
     return temp, humidity
 
@@ -40,3 +37,9 @@ def update_dht22_bathroom():
     dht22 = iot.models.Bathroom()
     dht22.update_data()
     print('@app.task <update_dht22Bathroom>: data has been updated from %s' % dht22.location)
+
+
+@app.task
+def mqtt_service_start():
+    from iot.mqtt import mqtt_start
+    mqtt_start()

@@ -11,6 +11,13 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
+
+def mqtt_start():
+    from iot.tasks import mqtt_service_start
+    mqtt_service_start.delay()
+
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "smart_home.settings")
 
 application = get_wsgi_application()
+mqtt_start()

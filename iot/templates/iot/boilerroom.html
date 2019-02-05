@@ -8,17 +8,17 @@
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script>
 
-        let climate_endpoint = '{% url 'bathroom_climate' %}';
+        let climate_endpoint = '{% url 'boilerroom_climate' %}';
 
         function refresh_climate() {
-            //console.log('refresh last climate data from DB!');
+            console.log('refresh last climate data from DB!');
             $.ajax({
                 async: true,
                 url: climate_endpoint,
                 success: function (data) {
-                    //console.log(data);
+                    console.log(data);
                     $('#climate').html(data);
-                    //console.log('climat refresh OK')  // TODO comment for prod
+                    console.log('climat refresh OK')
                 }
             });
         }
@@ -32,13 +32,13 @@
                 let val = $(this).attr('value');
                 $.ajax({
                 type: 'get',
-                url: '/bathroom/api/chart/' + val,
+                url: '/boilerroom/api/chart/' + val,
                 //data: {'period': $(this).attr('value')},
                 }).done(function (data) {
                     $('#data_chart').html(data);
                     //console.log('chart refresh OK')
                 }).fail(function () {
-                    console.log('"Sorry. Server unavailable. "');
+                    //console.log('"Sorry. Server unavailable. "');
                 });
             });
 
@@ -63,13 +63,13 @@
                 if (formValid) {
                     $.ajax({
                 type: 'get',
-                url: '/bathroom/api/chart/' + input_val,
+                url: '/boilerroom/api/chart/' + input_val,
                 //data: {'period': $(this).attr('value')},
                 }).done(function (data) {
                     $('#data_chart').html(data);
                     //console.log('chart refresh OK')
                 }).fail(function () {
-                    console.log('"Sorry. Server unavailable. "');
+                    //console.log('"Sorry. Server unavailable. "');
                 });
                 }
 
@@ -81,18 +81,18 @@
 
 
 {% block title %}
-    bathroom
+    Boiler room
 {% endblock %}
 
 
 {% block style %}
-    <link href="{% static 'iot/bathroom.css' %}" rel="stylesheet">
+    <link href="{% static 'iot/boilerroom.css' %}" rel="stylesheet">
 {% endblock %}
 
 
 {% block content %}
     <div class="container">
-      <h2>Bathroom</h2>
+      <h2>Boiler room</h2>
       <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#home">Climate</a></li>
         <li><a id="chartupdate" data-toggle="tab" href="#menu1">Chart</a></li>
@@ -127,7 +127,7 @@
             </div>
           </div>
 
-          <p>{% include 'iot/bathroom_chart.html' %}</p>
+          <p>{% include 'iot/boilerroom_chart.html' %}</p>
         </div>
       </div>
     </div>

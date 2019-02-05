@@ -1,3 +1,8 @@
-body {
-    background: url(images/home.jpg) no-repeat center center fixed;
+body, html {
+    height: 100%;
+    background: url(images/home.jpg);
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center center;
+    background-color: #444444;
 }

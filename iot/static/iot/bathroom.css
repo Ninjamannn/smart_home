@@ -1,0 +1,36 @@
+.climate-panel{
+    margin-top: 30px;
+    max-width: 400px;
+}
+
+.input-group{
+    position: static;
+    max-width: 259px;
+    width: 259px;
+    height: 36px;
+}
+
+.form-control{
+    height: 36px;
+}
+
+.has-feedback{
+    width: 265px;
+}
+
+.block-button{
+    margin-bottom: 5px;
+}
+
+.glypchart{
+    padding-top: 3px;
+    padding-right: 90px;
+}
+
+body {
+    /*background: url(images/bath-426383_1920.jpg) fixed;*/
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-position:center center;
+    background-color: rgba(255, 143, 222, 0);
+}

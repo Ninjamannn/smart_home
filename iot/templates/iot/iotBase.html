@@ -35,14 +35,14 @@
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Rooms <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Kitchen</a></li>
+                <li><a href="{% url 'underconstruction' %}">Kitchen</a></li>
                 <li><a href="{% url 'bathroom' %}">Bathroom</a></li>
-                <li><a href="{% url 'liveroom' %}">Live room</a></li>
-                <li><a href="#">Bed room</a></li>
+                <li><a href="{% url 'liveroom' %}">Living room</a></li>
+                <li><a href="{% url 'underconstruction' %}">Bed room</a></li>
               </ul>
             </li>
-            <li><a href="#">Boiler house <span class="glyphicon glyphicon-fire"></span></a></li>
-            <li><a href="#">Courtyard <span class="glyphicon glyphicon-tree-deciduous"></span></a></li>
+            <li><a href="{% url 'boilerroom' %}">Boiler house <span class="glyphicon glyphicon-fire"></span></a></li>
+            <li><a href="{% url 'underconstruction' %}">Courtyard <span class="glyphicon glyphicon-tree-deciduous"></span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{% url 'logout' %}">Log out <span class="glyphicon glyphicon-log-out"></span> </a></li>
