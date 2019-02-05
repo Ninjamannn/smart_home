@@ -119,3 +119,4 @@ iot/static/iot/responsive.css
 iot/static/iot/stylesconst.css
 iot/templates/iot/03-comming-soon.html
 iot/templates/iot/del.html
+/iot/templates/iot/testlogin.html

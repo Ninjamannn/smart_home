@@ -37,6 +37,7 @@ MQTT_USER = config('MQTT_USER', cast=str)
 MQTT_PASS = config('MQTT_PASS', cast=str)
 MQTT_HOST = config('MQTT_HOST', cast=str)
 MQTT_PORT = config('MQTT_PORT', cast=int)
+CLIENT_ID = config('CLIENT_ID', cast=str)
 
 
 def on_connect(client, userdata, flags, rc):
@@ -61,7 +62,7 @@ def on_disconnect(client, userdata, rc):
 
 
 def mqtt_start():
-    subscriber = client.Client(client_id="testing_mode")  # TODO: change id for prod.
+    subscriber = client.Client(client_id=CLIENT_ID)  # TODO: change id for prod to CLIENT_ID var.
     subscriber.username_pw_set(MQTT_USER, password=MQTT_PASS)
     subscriber.on_connect = on_connect
     subscriber.on_message = on_message
