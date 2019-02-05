@@ -17,5 +17,9 @@ urlpatterns = [
     path('liveroom/api/climate/', views.climate_liveroom, name='liveroom_climate'),
     path('liveroom/api/chart/<int:period>', views.liveroom, name='liveroom_chart'),
 
+    path('boilerroom/', views.boilerroom, name='boilerroom'),
+    path('boilerroom/api/climate/', views.climate_boilerroom, name='boilerroom_climate'),
+    path('boilerroom/api/chart/<int:period>', views.boilerroom, name='boilerroom_chart'),
+
     path('underconstruction/', views.underconstruction, name='underconstruction'),
 ]

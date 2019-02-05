@@ -14,10 +14,10 @@ def bathroom_data():
     response = urllib.request.urlopen('https://api.thingspeak.com/channels/120869/feeds.json?results=1')
     data = response.read()
     encoding = response.info().get_content_charset()
-    JSON_object = json.loads(data.decode(encoding))
+    json_object = json.loads(data.decode(encoding))
 
-    temp = float(JSON_object['feeds'][0]['field1'])
-    humidity = float(JSON_object['feeds'][0]['field2'])
+    temp = float(json_object['feeds'][0]['field1'])
+    humidity = float(json_object['feeds'][0]['field2'])
     print('@app.task <bathroom_data>: data received!')
     return temp, humidity
 

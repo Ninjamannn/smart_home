@@ -3,8 +3,8 @@ from django.contrib.auth import login as login_auth, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from iot.models import Bathroom, Liveroom
-from iot.charts import chart_bathroom, chart_liveroom
+from iot.models import Bathroom, Liveroom, BoilerRoom
+from iot.charts import chart_bathroom, chart_liveroom, chart_boilerroom
 
 
 @login_required(login_url='login')
@@ -64,7 +64,30 @@ def liveroom(request, **kwargs):
         return render(request, 'iot/liveroom_chart.html', {'Data': cht})
     last_data = Liveroom.objects.last()
     cht = chart_liveroom(period=3)
+
     return render(request, 'iot/liveroom.html', {'Data': cht, 'last_data': last_data})
+
+
+@login_required(login_url='login')
+def climate_boilerroom(request):
+    last_data = dict(
+        temp_value=BoilerRoom.objects.filter(type_value="temp").last().value,
+        hum_value=0,
+        datetime=BoilerRoom.objects.last().datetime,
+    )
+
+    return render(request, 'iot/climate_boilerroom.html', {'last_data': last_data})
+
+
+@login_required(login_url='login')
+def boilerroom(request, **kwargs):
+    if kwargs:
+        cht = chart_boilerroom(period=kwargs['period'])
+        return render(request, 'iot/boilerroom_chart.html', {'Data': cht})
+    last_data = BoilerRoom.objects.last()
+    cht = chart_boilerroom(period=3)
+
+    return render(request, 'iot/boilerroom.html', {'Data': cht, 'last_data': last_data})
 
 
 def underconstruction(request):

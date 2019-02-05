@@ -115,4 +115,3 @@ def _update_static_files():
 def _update_database():
     run('{venvpyton}/python manage.py migrate --noinput'.format(venvpyton=env.venvpyton))
 
-# TODO: reset redis + celery(?) resolve Connected with result code: 0
