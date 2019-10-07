@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY', cast=str)
 
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['www.myiothome.ml', '52.59.248.255', 'myiothome.ml', '127.0.0.1', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['www.myiothome.ga', '52.59.248.255', 'myiothome.ga', '127.0.0.1', '127.0.0.1:8000']
 
 
 # Application definition

@@ -23,6 +23,19 @@ ch.setLevel(logging.DEBUG)
 ch.setFormatter(formatter)
 log.addHandler(ch)
 
+MQTT_ERRORS = {
+    '-4': 'MQTT_CONNECTION_TIMEOUT - the server did not respond within the keepalive time',
+    '-3': 'MQTT_CONNECTION_LOST - the network connection was broken',
+    '-2': 'MQTT_CONNECT_FAILED - the network connection failed',
+    '-1': 'MQTT_DISCONNECTED - the client is disconnected cleanly',
+    '0': 'MQTT_CONNECTED - the client is connected',
+    '1': 'MQTT_CONNECT_BAD_PROTOCOL - the server does not support the requested version of MQTT',
+    '2': 'MQTT_CONNECT_BAD_CLIENT_ID - the server rejected the client identifier',
+    '3': 'MQTT_CONNECT_UNAVAILABLE - the server was unable to accept the connection',
+    '4': 'MQTT_CONNECT_BAD_CREDENTIALS - the username/password were rejected',
+    '5': 'MQTT_CONNECT_UNAUTHORIZED - the client was not authorized to connect',
+}
+
 
 # rooms = {
 #     'boiler_room': {'topic': 'boiler_room/sensors/ds18b20', 'model': None},
@@ -41,7 +54,7 @@ CLIENT_ID = config('CLIENT_ID', cast=str)
 
 
 def on_connect(client, userdata, flags, rc):
-    log.info(f'Connected with result code: {rc}')
+    log.info(f'Connected with result code: {MQTT_ERRORS[str(rc)]}')
     client.subscribe([('boiler_room/sensors/ds18b20', 0), ('boiler_room/sensors/dht22/#', 0)])
 
 
@@ -56,21 +69,21 @@ def on_disconnect(client, userdata, rc):
     loop_stop for resolve extra connections
     """
     if rc != 0:
-        log.info(f"Unexpected MQTT disconnection ERROR - {rc}")
+        log.info(f"Unexpected MQTT disconnection ERROR - {MQTT_ERRORS[str(rc)]}")
         log.info(f"stop extra connections...")
-        client.loop_stop()
+
 
 
 def mqtt_start():
-    subscriber = client.Client(client_id=CLIENT_ID)  # TODO: change id for prod to CLIENT_ID var.
+    subscriber = client.Client(client_id='develop')  # TODO: change id for prod to CLIENT_ID var.
     subscriber.username_pw_set(MQTT_USER, password=MQTT_PASS)
     subscriber.on_connect = on_connect
     subscriber.on_message = on_message
     subscriber.on_disconnect = on_disconnect
     subscriber.connect_async(MQTT_HOST, MQTT_PORT)
+    log.info('mqtt service started')
     subscriber.loop_start()
     #subscriber.loop_forever()
-    log.info('mqtt service started')
 
 
 def save_room_data(data, topic):

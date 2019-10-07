@@ -27,10 +27,31 @@
     padding-right: 90px;
 }
 
+.nav>li>a {
+    color: rgb(51, 51, 51);
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #337ab7c4;
+}
+
+.panel-primary {
+    border-color: #5e5e5e;
+}
+
+.panel-primary>.panel-heading {
+    background-color: #337ab7c4;
+}
+
+.panel-body {
+    color: rgb(51, 51, 51);
+}
+
 body {
     /*background: url(images/living-room-3035878_1280.jpg) fixed;*/
     background-repeat:no-repeat;
     background-size: cover;
     background-position:center center;
-    background-color: rgba(60, 101, 121, 0.72);
+    background-color: rgba(0, 0, 0, 0.63);
+    color: #ffffffad;
 }

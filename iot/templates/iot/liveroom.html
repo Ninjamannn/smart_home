@@ -24,9 +24,10 @@
         }
 
         $(document).ready(function () {
-            //console.log('STARTING refresh');
+            let update_time = 10000;
+            console.log('STARTING refresh');
             refresh_climate();
-            setInterval('refresh_climate()', 10000);
+            setInterval('refresh_climate()', update_time);
             $('.container').on('click', '#certain_chart', function () {
                 this.blur(); // off focus on button after click
                 let val = $(this).attr('value');

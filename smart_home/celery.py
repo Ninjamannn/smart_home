@@ -15,6 +15,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'send-report-by-schedule': {
         'task': 'iot.tasks.update_dht22_bathroom',
-        'schedule': crontab(minute='*/15'),  # minute='*/15' Execute every 15 minutes. TODO: change for prod.
+        'schedule': crontab(minute='*/1'),  # minute='*/15' Execute every 15 minutes. TODO: change for prod.
     },
 }

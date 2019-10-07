@@ -24,6 +24,7 @@ def bathroom_data():
 
 # celery worker -A smart_home --loglevel=debug --pool=eventlet [--concurrency=2] win
 # celery worker -A smart_home --loglevel=debug --concurrency=2    linux
+# flower --broker=redis://localhost:6379/0 --broker_api=redis://localhost:6379/0   FLOWER
 # celery -A smart_home beat
 # pkill -9 -f 'celery worker'
 
@@ -41,5 +42,6 @@ def update_dht22_bathroom():
 
 @app.task
 def mqtt_service_start():
+    print(mqtt_service_start)
     from iot.mqtt import mqtt_start
     mqtt_start()
